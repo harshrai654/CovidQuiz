@@ -1,30 +1,54 @@
 import data from "./data.js";
 
 
-const init = function(){
-    let index = 0;
-    const quesArea = document.getElementById("ques");
-    const nextButton = document.getElementById("next");
-    const prevButton = document.getElementById("prev");
-    const questionList = data.questions;
-    const total = questionList.length;
+class QuestionPallete{
+    constructor(){
+        this.state = {
+            index : 0,
+            quesArea : document.getElementById("ques"),
+            nextButton : document.getElementById("next"),
+            prevButton : document.getElementById("prev"),
+            subButton : document.getElementById("sub"),
+            questionList : data.questions,
+            opts: document.getElementsByName("opts"),
+            total : data.questions.length
+        }
 
-    quesArea.innerHTML = questionList[index].text;
+        this.state.quesArea.innerHTML = this.state.questionList[0].text;
 
-    nextButton.addEventListener("click", ()=>{
-        index = (index + 1)%total;
-        console.log(index)
-        document.getElementById("ques").innerHTML = questionList[index].text;
-    })
-    
-    prevButton.addEventListener("click", ()=>{
-        index = index-1 < 0?total-1:index-1;
-        console.log(index)
-        document.getElementById("ques").innerHTML = questionList[index].text;
-    })
-}
+        this.state.nextButton.addEventListener("click", ()=>{
+            this.state.index = (this.state.index + 1)%this.state.total;
+            this.changeQuestion();
+        })
+        
+        this.state.prevButton.addEventListener("click", ()=>{
+            this.state.index = this.state.index-1 < 0?this.state.total-1:this.state.index-1;
+            this.changeQuestion();
+        })
 
-init();
+        this.state.subButton.addEventListener("click", ()=>{
+            document.getElementsByName("opts").forEach((opt,index)=>{
+                if(opt.checked && index == this.state.questionList[this.state.index].ans){
+                    console.log("WIN")
+                }else{
+                    console.log("LOSE")
+                }
+            })
+        })
+
+    }
+
+    changeQuestion = () => {
+        this.state.quesArea.innerHTML = this.state.questionList[this.state.index].text;
+        this.state.opts.forEach((opt,index)=>{
+            opt.nextSibling.textContent = this.state.questionList[this.state.index].opts[index]
+            
+        })
+    }
+
+};
+
+const qs = new QuestionPallete();
 
 
 
