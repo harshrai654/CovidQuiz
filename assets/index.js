@@ -11,7 +11,9 @@ class QuestionPallete{
             subButton : document.getElementById("sub"),
             questionList : data.questions,
             opts: document.getElementsByName("opts"),
-            total : data.questions.length
+            total : data.questions.length,
+            status:new Array(data.questions.length).fill(null).map(()=>({attempted:false, correct:false})),
+            score:0
         }
 
         this.state.quesArea.innerHTML = this.state.questionList[0].text;
@@ -27,19 +29,50 @@ class QuestionPallete{
         })
 
         this.state.subButton.addEventListener("click", ()=>{
+            let winStatus = false;
+            let statusArea = document.getElementById("status");
+
             document.getElementsByName("opts").forEach((opt,index)=>{
                 if(opt.checked && index == this.state.questionList[this.state.index].ans){
                     console.log("WIN")
-                }else{
-                    console.log("LOSE")
+                    this.state.score++;
+                    winStatus = true;
+                    document.getElementById("score").innerText = this.state.score;
                 }
             })
+            //Disabling submit after click
+            this.state.status[this.state.index].attempted = true;
+            this.state.subButton.disabled = true;
+
+            if(winStatus){
+                this.state.status[this.state.index].correct = true;
+                statusArea.innerText = "Correct!"
+            }else{
+                statusArea.innerText = "Wrong!!!"
+            }
+
         })
 
     }
 
     changeQuestion = () => {
         this.state.quesArea.innerHTML = this.state.questionList[this.state.index].text;
+        let statusArea = document.getElementById("status");
+        let status = this.state.status[this.state.index].attempted;
+        this.state.subButton.disabled = status.attempted;
+
+        
+
+        if(!status)
+            document.getElementById("status").innerText = ""
+        else{
+            if(status.correct){
+                statusArea.innerText = "Correct!"
+            }else{
+                statusArea.innerText = "Wrong!!!"
+            }
+        }
+
         this.state.opts.forEach((opt,index)=>{
             opt.nextSibling.textContent = this.state.questionList[this.state.index].opts[index]
             
