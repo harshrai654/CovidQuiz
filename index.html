@@ -1,39 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/styles.css">
-    
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/styles.css" />
+
     <script type="module" src="./assets/index.js"></script>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Covid-19 Quiz</title>
-  
-</head>
-<body>
-    <div>
-        <h3 id="ques">
-            Question
-        </h3>
-        <br>
+  </head>
+  <body>
+    <div id="questions" class="flex-container">
+      <div class="flex-inner-container">
+        <header style="background-color: aqua; flex-grow: 5">Covid Quiz</header>
+        <div
+          style="margin-left: auto; background-color: aquamarine; flex-grow: 1"
+        >
+          <label for="score">Score</label>
+          <span id="score">::</span>
+        </div>
+      </div>
 
-        <label><input type="radio" value="A" name="opts">A</label>
-        <label><input type="radio" value="B" name="opts">B</label>
-        <label><input type="radio" value="C" name="opts">C</label>
-        <label><input type="radio" value="D" name="opts">D</label>
-        
-        <br>
-        <br>
-        <button id="next">Next</button>
-        <button id="prev">Previous</button>
-        <button id="sub">Submit</button>
+      <span id="ques"> Question </span>
+      <br />
 
-        <label for="score">Score</label>
-        <span id="score">::</span>
+      <div id="options">
+        <div class="flex-inner-container">
+          <span class="opt" style="background-color: cornflowerblue"
+            ><label><input type="radio" value="A" name="opts" />A</label></span
+          >
+          <span class="opt" style="background-color: turquoise"
+            ><label><input type="radio" value="B" name="opts" />B</label></span
+          >
+        </div>
+        <div class="flex-inner-container">
+          <span class="opt" style="background-color: darkkhaki"
+            ><label><input type="radio" value="C" name="opts" />C</label></span
+          >
+          <span class="opt" style="background-color: tomato"
+            ><label><input type="radio" value="D" name="opts" />D</label></span
+          >
+        </div>
+      </div>
 
-        <span id="status"></span>
+      <br />
+      <br />
 
+      <div>
+        <button class="controls" id="next">Next</button>
+        <button class="controls" id="prev">Previous</button>
+        <button class="controls" id="sub">Submit</button>
+      </div>
+
+      <span id="status"></span>
+      <br />
+      <button class="controls" id="finalSub">END QUIZ</button>
     </div>
-</body>
+  </body>
 </html>
