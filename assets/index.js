@@ -9,6 +9,7 @@ class QuestionPallete{
             nextButton : document.getElementById("next"),
             prevButton : document.getElementById("prev"),
             subButton : document.getElementById("sub"),
+            finalSub : document.getElementById("finalSub"),
             questionList : data.questions,
             opts: document.getElementsByName("opts"),
             total : data.questions.length,
@@ -53,17 +54,22 @@ class QuestionPallete{
 
         })
 
+        this.state.finalSub.addEventListener("click",()=>{
+            let correct = 0;
+            this.state.status.forEach(st=>st.correct && correct++)
+            console.log(this.state.score, correct)
+        })
     }
 
     changeQuestion = () => {
         this.state.quesArea.innerHTML = this.state.questionList[this.state.index].text;
         let statusArea = document.getElementById("status");
-        let status = this.state.status[this.state.index].attempted;
+        let status = this.state.status[this.state.index];
         this.state.subButton.disabled = status.attempted;
 
         
 
-        if(!status)
+        if(!status.attempted)
             document.getElementById("status").innerText = ""
         else{
             if(status.correct){
