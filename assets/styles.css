@@ -15,16 +15,21 @@ body {
 }
 
 .options {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   align-items: center;
 }
 
+#ques {
+  display: inline-block;
+}
 .opt {
+  font-size: large;
   align-content: center;
   height: 4rem;
   width: 30rem;
-  margin: 5px;
+  margin: 2px;
+  padding: 0.5%;
 }
 
 #ques {
