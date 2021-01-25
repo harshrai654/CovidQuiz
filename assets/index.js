@@ -127,8 +127,7 @@ class QuestionPallete {
           }
         }
       } else {
-        opt.parentElement.parentElement.style.backgroundColor =
-          "rgb(255, 235, 205)";
+        opt.parentElement.parentElement.style.backgroundColor = "#ef233c";
         opt.disabled = false;
       }
     });
