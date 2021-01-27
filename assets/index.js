@@ -10,7 +10,6 @@ class QuestionPallete {
       subButton: document.getElementById("sub"),
       factArea: document.getElementById("fact"),
       gifArea: document.getElementById("gif"),
-      finalSub: document.getElementById("finalSub"),
       questionList: data.questions,
       opts: document.getElementsByName("opts"),
       total: data.questions.length,
@@ -26,6 +25,7 @@ class QuestionPallete {
 
     this.state.quesArea.innerHTML = this.state.questionList[0].text;
     this.state.gifArea.src = this.state.questionList[0].gif;
+    document.getElementById("score").innerText = this.state.score;
 
     this.state.opts.forEach((opt, index) => {
       opt.nextSibling.textContent = this.state.questionList[0].opts[index];
@@ -77,12 +77,6 @@ class QuestionPallete {
       } else {
         statusArea.innerText = "Wrong!!!";
       }
-    });
-
-    this.state.finalSub.addEventListener("click", () => {
-      let correct = 0;
-      this.state.status.forEach((st) => st.correct && correct++);
-      console.log(this.state.score, correct);
     });
   }
 
@@ -145,4 +139,24 @@ class QuestionPallete {
   };
 }
 
-const qs = new QuestionPallete();
+let qs = new QuestionPallete();
+
+document.getElementById("finalSub").addEventListener("click", () => {
+  let correct = 0;
+  qs.state.status.forEach((st) => st.correct && correct++);
+
+  let highScore = localStorage.getItem("highScore");
+  if (!highScore) {
+    localStorage.setItem("highScore", qs.state.score);
+  } else {
+    if (highScore < qs.state.score)
+      localStorage.setItem("highScore", qs.state.score);
+  }
+
+  alert(
+    `Correct: ${correct}\nIncorrect: ${qs.state.total - correct}\nScore: ${
+      qs.state.score
+    }`
+  );
+  window.location.reload();
+});
