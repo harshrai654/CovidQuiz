@@ -20,6 +20,10 @@ class QuestionPallete {
       score: 0,
     };
 
+    this.shuffle(this.state.questionList);
+
+    console.log(this.questionList);
+
     this.state.quesArea.innerHTML = this.state.questionList[0].text;
     this.state.gifArea.src = this.state.questionList[0].gif;
 
@@ -81,6 +85,13 @@ class QuestionPallete {
       console.log(this.state.score, correct);
     });
   }
+
+  shuffle = function (questions) {
+    for (let i = questions.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [questions[i], questions[j]] = [questions[j], questions[i]];
+    }
+  };
 
   changeQuestion = () => {
     this.state.quesArea.innerHTML = this.state.questionList[
