@@ -15,21 +15,60 @@
     <title>Covid-19 Quiz</title>
   </head>
   <body>
+    <header
+      class="flex-container"
+      style="background-color: #2b2d42; color: white; flex-grow: 5"
+    >
+      <h1>Covid Quiz</h1>
+    </header>
+    <div class="flex-container" style="margin-top: 15%" id="userName">
+      <form id="userForm">
+        <input
+          type="text"
+          name="uname"
+          id="un"
+          style="font-size: larger"
+          required
+        />
+        <input type="submit" style="margin-top: 2%; font-size: larger" />
+      </form>
+    </div>
     <div id="questions" class="flex-container">
       <div class="flex-inner-container">
-        <header style="background-color: #2b2d42; color: white; flex-grow: 5">
-          Covid Quiz
-        </header>
         <div
           style="
             margin-left: auto;
             background-color: #8d99ae;
             color: white;
-            flex-grow: 1;
+            flex-grow: 3;
           "
         >
           <label for="score">Score</label>
           <span id="score">::</span>
+        </div>
+
+        <div
+          style="
+            margin-left: auto;
+            background-color: #8d99ae;
+            color: white;
+            flex-grow: 2;
+          "
+        >
+          <label for="name">Name:</label>
+          <span id="name"></span>
+        </div>
+
+        <div
+          style="
+            margin-left: auto;
+            background-color: #8d99ae;
+            color: white;
+            flex-grow: 0.5;
+          "
+        >
+          <label for="time">Time: </label>
+          <span id="time"></span>
         </div>
       </div>
 
