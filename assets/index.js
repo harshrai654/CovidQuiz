@@ -2,6 +2,7 @@ import data from "./data.js";
 
 class QuestionPallete {
   constructor() {
+    //Initial state of Question-pallete
     this.state = {
       index: 0,
       quesArea: document.getElementById("ques"),
@@ -13,16 +14,17 @@ class QuestionPallete {
       questionList: data.questions,
       opts: document.getElementsByName("opts"),
       total: data.questions.length,
-      status: new Array(data.questions.length)
+      status: new Array(data.questions.length) //Status of all questions
         .fill(null)
         .map(() => ({ attempted: false, correct: false })),
       score: 0,
+      totalTime: 120000,
+      currentTime: 0,
     };
 
-    this.shuffle(this.state.questionList);
+    this.shuffle(this.state.questionList); //Randomization of questions
 
-    console.log(this.questionList);
-
+    //Initial UI
     this.state.quesArea.innerHTML = this.state.questionList[0].text;
     this.state.gifArea.src = this.state.questionList[0].gif;
     document.getElementById("score").innerText = this.state.score;
@@ -31,6 +33,7 @@ class QuestionPallete {
       opt.nextSibling.textContent = this.state.questionList[0].opts[index];
     });
 
+    //Various event listener
     this.state.nextButton.addEventListener("click", () => {
       this.state.index = (this.state.index + 1) % this.state.total;
       this.changeQuestion();
@@ -139,9 +142,7 @@ class QuestionPallete {
   };
 }
 
-let qs = new QuestionPallete();
-
-document.getElementById("finalSub").addEventListener("click", () => {
+const onSubmit = () => {
   let correct = 0;
   qs.state.status.forEach((st) => st.correct && correct++);
 
@@ -159,4 +160,34 @@ document.getElementById("finalSub").addEventListener("click", () => {
     }`
   );
   window.location.reload();
-});
+};
+
+let qs = new QuestionPallete();
+
+document.getElementById("finalSub").addEventListener("click", onSubmit);
+
+(function () {
+  //Hiding Question pallete
+  document.getElementById("questions").style.display = "none";
+
+  document.getElementById("userForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    let uname = document.getElementById("un").value;
+    localStorage.setItem("uname", uname);
+    document.getElementById("name").innerText = uname;
+    document.getElementById("userName").style.display = "none";
+    document.getElementById("questions").style.display = "flex";
+
+    //Starting timer
+    setTimeout(onSubmit, qs.state.totalTime);
+    let timer = document.getElementById("time");
+
+    setInterval(() => {
+      qs.state.currentTime++;
+      let total = qs.state.totalTime / 1000;
+
+      timer.innerText = total - qs.state.currentTime;
+    }, 1000);
+  });
+})();
