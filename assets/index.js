@@ -147,16 +147,25 @@ const onSubmit = () => {
   qs.state.status.forEach((st) => st.correct && correct++);
 
   let highScore = localStorage.getItem("highScore");
+  let highScName = localStorage.getItem("highScName");
+
   if (!highScore) {
     localStorage.setItem("highScore", qs.state.score);
   } else {
-    if (highScore < qs.state.score)
+    if (highScore < qs.state.score) {
+      let uname = localStorage.getItem("uname");
       localStorage.setItem("highScore", qs.state.score);
+      localStorage.setItem("highScName", uname);
+    }
   }
 
   alert(
     `Correct: ${correct}\nIncorrect: ${qs.state.total - correct}\nScore: ${
       qs.state.score
+    }${
+      highScore < qs.state.score
+        ? " (High-Score)"
+        : `\nHighScorer: ${highScName}\nHigh-Score: ${highScore}`
     }`
   );
   window.location.reload();
