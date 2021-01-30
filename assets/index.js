@@ -174,51 +174,10 @@ class QuestionPallete {
   };
 }
 
-//Function to handle end of quiz
-const onSubmit = () => {
-  let correct = 0;
-
-  //Counting number of correct questions from status array
-  qs.state.status.forEach((st) => st.correct && correct++);
-
-  //fetchng high-score and high score username
-  let highScore = localStorage.getItem("highScore");
-  let highScName = localStorage.getItem("highScName");
-
-  if (!highScore) {
-    //In case of no previous highscore
-    localStorage.setItem("highScore", qs.state.score);
-  } else {
-    //updating high score if needed
-    if (highScore < qs.state.score) {
-      let uname = localStorage.getItem("uname");
-      localStorage.setItem("highScore", qs.state.score);
-      localStorage.setItem("highScName", uname);
-    }
-  }
-
-  //Alerting user of result with highScorer
-  alert(
-    `Correct: ${correct}\nIncorrect: ${qs.state.total - correct}\nScore: ${
-      qs.state.score
-    }${
-      highScore < qs.state.score
-        ? " (High-Score)"
-        : `\nHighScorer: ${highScName}\nHigh-Score: ${highScore}`
-    }`
-  );
-  window.location.reload();
-};
-
-let qs = new QuestionPallete();
-
-//Adding listener for end-quiz
-document.getElementById("finalSub").addEventListener("click", onSubmit);
-
 //Handling user form to be displayed before quiz
 (function () {
-  //Hiding Question pallete
-  document.getElementById("questions").style.display = "none";
+  //Adding user form
+  document.getElementById("userName").innerHTML = data.staticHTML.getUI(0);
 
   document.getElementById("userForm").addEventListener("submit", (e) => {
     e.preventDefault();
@@ -227,22 +186,72 @@ document.getElementById("finalSub").addEventListener("click", onSubmit);
     let uname = document.getElementById("un").value;
     localStorage.setItem("uname", uname);
 
+    //Adding Questions page
+    document.getElementById("questions").innerHTML = data.staticHTML.getUI(1);
+
+    let qs = new QuestionPallete();
+
+    //Removing   user-form
+    document.getElementById("userName").remove();
+
     document.getElementById("name").innerText = uname;
-
-    //Hiding  user-form
-    document.getElementById("userName").style.display = "none";
-    document.getElementById("questions").style.display = "flex";
-
-    //Starting timer
-    setTimeout(onSubmit, qs.state.totalTime);
     let timer = document.getElementById("time");
 
+    //Adding listener for end-quiz
+    document.getElementById("finalSub").addEventListener("click", onSubmit);
+
+    //Starting timer
+    let totalTimer = setTimeout(onSubmit, qs.state.totalTime);
+
     //Updating timer-ui
-    setInterval(() => {
+    let timeUpdater = setInterval(() => {
       qs.state.currentTime++;
       let total = qs.state.totalTime / 1000;
 
       timer.innerText = total - qs.state.currentTime;
     }, 1000);
+
+    //Function to handle end of quiz
+    function onSubmit() {
+      //Clearing timers
+      clearTimeout(totalTimer);
+      clearInterval(timeUpdater);
+
+      let correct = 0;
+      let attempted = 0;
+      //Counting number of correct questions from status array
+      qs.state.status.forEach((st) => {
+        st.correct && correct++;
+        st.attempted && attempted++;
+      });
+
+      //fetchng high-score and high score username
+      let highScore = localStorage.getItem("highScore");
+      let highScName = localStorage.getItem("highScName");
+
+      if (!highScore) {
+        //In case of no previous highscore
+        localStorage.setItem("highScore", qs.state.score);
+      } else {
+        //updating high score if needed
+        if (highScore < qs.state.score) {
+          let uname = localStorage.getItem("uname");
+          localStorage.setItem("highScore", qs.state.score);
+          localStorage.setItem("highScName", uname);
+        }
+      }
+
+      //Alerting user of result with highScorer
+      alert(
+        `Correct: ${correct}\nIncorrect: ${attempted - correct}\nScore: ${
+          qs.state.score
+        }${
+          highScore < qs.state.score
+            ? " (High-Score)"
+            : `\nHighScorer: ${highScName}\nHigh-Score: ${highScore}`
+        }`
+      );
+      window.location.reload();
+    }
   });
 })();
