@@ -105,6 +105,110 @@ const data = {
       ans: 3,
     },
   ],
+  staticHTML: {
+    //Get HTML content for a element
+    getUI: function (index) {
+      return index
+        ? `<div class="flex-inner-container">
+        <div
+          style="
+            margin-left: auto;
+            background-color: #8d99ae;
+            color: white;
+            flex-grow: 3;
+          "
+        >
+          <label for="score">Score</label>
+          <span id="score">::</span>
+        </div>
+
+        <div
+          style="
+            margin-left: auto;
+            background-color: #8d99ae;
+            color: white;
+            flex-grow: 2;
+          "
+        >
+          <label for="name">Name:</label>
+          <span id="name"></span>
+        </div>
+
+        <div
+          style="
+            margin-left: auto;
+            background-color: #8d99ae;
+            color: white;
+            flex-grow: 0.5;
+          "
+        >
+          <label for="time">Time: </label>
+          <span id="time"></span>
+        </div>
+      </div>
+
+      <span id="ques"> Question </span>
+      <br />
+      <br />
+
+      <img
+        width="20%"
+        id="gif"
+        src="https://media.giphy.com/media/f9vtArcZ6uqc1FhucD/giphy.gif"
+        alt="img1"
+      />
+      <br />
+      <div id="options">
+        <div class="flex-inner-container">
+          <span class="opt"
+            ><label><input type="radio" value="A" name="opts" />A</label></span
+          >
+          <span class="opt"
+            ><label><input type="radio" value="B" name="opts" />B</label></span
+          >
+        </div>
+        <div class="flex-inner-container">
+          <span class="opt"
+            ><label><input type="radio" value="C" name="opts" />C</label></span
+          >
+          <span class="opt"
+            ><label><input type="radio" value="D" name="opts" />D</label></span
+          >
+        </div>
+      </div>
+
+      <br />
+
+      <span id="status"></span>
+
+      <br />
+
+      <div>
+        <button class="controls" id="next">Next</button>
+        <button class="controls" id="prev">Previous</button>
+        <button class="controls" id="sub">Submit</button>
+      </div>
+
+      <br />
+
+      <div id="fact"></div>
+      <button class="controls" id="finalSub">END QUIZ</button>`
+        : `
+      
+      <form id="userForm">
+        <input
+          type="text"
+          name="uname"
+          id="un"
+          style="font-size: larger"
+          required
+        />
+        <input type="submit" style="margin-top: 2%; font-size: larger" />
+      </form>
+    
+    `;
+    },
+  },
 };
 
 export default data;
